@@ -146,7 +146,7 @@ chosen a recall based evaluation metric MPR(Mean Percentage Ranking) due to the 
 $rank_{ui} = 0$% signifies that $i$ is predicted as the highest recommended item for $u$. Similarly, $rank_{ui} = 100$% signifies that $i$ is predicted as the lowest recommended item for $u$.
 
 ### 4.3 Result
-![Geometric pattern with fading gradient]({{ site.baseurl }}/assets/img/LMFresult.png)
+![result](https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/LMFresult.PNG?raw=true)
 
 
 ### Reference
