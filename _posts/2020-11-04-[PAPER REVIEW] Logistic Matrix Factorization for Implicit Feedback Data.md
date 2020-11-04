@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: [PAPER REVIEW]: Logistic Matrix Factorization for Implicit Feedback Data
 tags: [paper review, recommender system, matrix factorization, implicit feedback]
@@ -11,12 +11,12 @@ Assume that we have a set of non-negative feedback values associated with each p
 * $I = \left( i_1, \cdots, i_m \right)$: a group of $m$ items
 * $\mathbf{R} = (r_{ui})_{n\times m}$: a user-item observation matrix where $r_{ui} \in \mathbb{R}_{\ge 0}$ represents the number of times that user $u$ interacted with item $i$
 
-For any entries $r_{ui}$ where user $u$ does not interact with item $i$, place 0's.  Note that a value 0 does not imply that the user does not prefer the item, but could simply imply that the user does not know about the item. 
+For any entries $r_{ui}$ where user $u$ does not interact with item $i$, place 0's.  Note that a value 0 does not imply that the user does not prefer the item, but could simply imply that the user does not know about the item.
 Then, our goal is to find the top recommended items for each user for each item that they have not yet interacted with.
 
-  
-  
-# **2. Logistic MF** 
+
+
+# **2. Logistic MF**
 ## 2.1 Matrix Factorization
 Factorizing the observation matrix $\mathbf{R}$ by 2 lower dimensional matrices $\mathbf{X}_{n \times f}$ and $\mathbf{Y}_{m \times f}$ ,where $f =$ the number of latent factors.  
 $$
@@ -24,8 +24,8 @@ $$
 $$
 
 $$
-\mathbf{X}_{n \times f} = \begin{pmatrix} \mathbf{x}_1  \\ \vdots\\ \mathbf{x}_n \end{pmatrix} ,\mathbf{Y}_{m \times f} = \begin{pmatrix} \mathbf{y}_1  \\ \vdots\\ \mathbf{y}_m \end{pmatrix}, 
-\mathbf{x}_u^T = \begin{pmatrix} x_{u1}  \\ \vdots\\ x_{um} \end{pmatrix}, 
+\mathbf{X}_{n \times f} = \begin{pmatrix} \mathbf{x}_1  \\ \vdots\\ \mathbf{x}_n \end{pmatrix} ,\mathbf{Y}_{m \times f} = \begin{pmatrix} \mathbf{y}_1  \\ \vdots\\ \mathbf{y}_m \end{pmatrix},
+\mathbf{x}_u^T = \begin{pmatrix} x_{u1}  \\ \vdots\\ x_{um} \end{pmatrix},
 \mathbf{y}_i ^T= \begin{pmatrix} y_{i1}  \\ \vdots\\ y_{in} \end{pmatrix}
 $$
 
@@ -33,7 +33,7 @@ $$
 Let $l_{ui}$ be the event that user $u$ has chosen to interact with item $i$.
 
 $$
-l_{ui} = 
+l_{ui} =
 \begin{cases}
 1, r_{ui}\ne 0 \text{  represents positive  } \\
 0, r_{ui}=0 \text{  represents negative }
@@ -55,7 +55,7 @@ $$
 \beta_i = \text{item } i \text{ bias}\\
  \end{cases}
 $$
-## 2.3 Define Confidence 
+## 2.3 Define Confidence
 $$
 c_{ui} = \alpha r_{ui}  =
 \begin{cases}> 0 , r_{ui}\ne 0 \\
@@ -80,7 +80,7 @@ $$
 ### Likelihood
 Assume that all entries of $\mathbf{R}$ are independent.
 $$
-L(\mathbf{R}\vert \mathbf{X, Y}, \beta_u, \beta_i) = 
+L(\mathbf{R}\vert \mathbf{X, Y}, \beta_u, \beta_i) =
 \prod_{u, i}p(l_{ui}\vert\mathbf{x}_u, \mathbf{y}_i, \beta_u, \beta_i)^{\alpha r_{ui}} \times \left( 1-p(l_{ui}\vert\mathbf{x}_u, \mathbf{y}_i, \beta_u, \beta_i) \right)
 $$
 ### Prior Probability
@@ -97,11 +97,11 @@ $$
 $$
 
 $\log p( \mathbf{X}, \mathbf{Y},\beta_u, \beta_i \vert \mathbf{R})\\
-\propto \sum_{u, i} \{ \alpha r_{ui} \log p(l_{ui} \vert \mathbf{x}_u, \mathbf{y}_i, \beta_u, \beta_i)+\log \left ( 1- p(l_{ui} \vert \mathbf{x}_u, \mathbf{y}_i, \beta_u, \beta_i)\right)\} \\
-\quad +\sum_{u}\log N(\mathbf{x}_u \vert \mathbf{0}, \sigma^2_u\mathbf{I}) + \sum_{i}\log N(\mathbf{y}_i \vert \mathbf{0}, \sigma^2_i\mathbf{I})\\
+\propto \sum_{u, i} \{ \alpha r_{ui} \log p(l_{ui} \vert \mathbf{x}_u, \mathbf{y}_i, \beta_u, \beta_i)+\log \left ( 1- p(l_{ui} \vert \mathbf{x}_u, \mathbf{y}_i, \beta_u, \beta_i)\right)\}
++\sum_{u}\log N(\mathbf{x}_u \vert \mathbf{0}, \sigma^2_u\mathbf{I}) + \sum_{i}\log N(\mathbf{y}_i \vert \mathbf{0}, \sigma^2_i\mathbf{I})\\
 = \sum_{u, i}\alpha r_{ui}(\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i) - (1+\alpha r_{ui})\log (1+\exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i))
  -\frac{\lambda}{2} \lVert \mathbf{x}_u\rVert^2 - \frac{\lambda}{2} \lVert \mathbf{y}_i\rVert^2$  
- 
+
 
 # **3. Optimization**
 Our goal is to learn $\mathbf{X}, \mathbf{Y}, \beta_u \beta_i$ that maximize the log posterior.  
@@ -118,12 +118,12 @@ $$
 $$
 \frac{\partial}{\partial \mathbf{y}_i} \log p(\mathbf{X}, \mathbf{Y}, \beta_u, \beta_i \vert \mathbf{R}) = \sum_{u}\alpha r_{ui}\mathbf{x}_u - \frac{(1+\alpha r_{ui})\mathbf{x}_u \exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i))}
 {1+\exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i))} - \lambda \mathbf{y}_i
-$$ 
+$$
 
 $$
 \frac{\partial}{\partial \mathbf{x}_u} \log p(\mathbf{X}, \mathbf{Y}, \beta_u, \beta_i \vert \mathbf{R}) = \sum_{u}\alpha r_{ui}\mathbf{y}_i - \frac{(1+\alpha r_{ui})\mathbf{y}_i \exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i))}
 {1+\exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i))} - \lambda \mathbf{x}_u
-$$ 
+$$
 
 $$
 \frac{\partial}{\partial \beta_i}\log p(\mathbf{X}, \mathbf{Y}, \beta_u, \beta_i \vert \mathbf{R}) = \sum_{u}\alpha r_{ui} - \frac{(1+\alpha r_{ui}) \exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i)))}{1+\exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i)))}
@@ -149,12 +149,12 @@ $$
 rank_{ui} = \text{percentile ranking of item } i \text{ for user }u
 $$
 
-$rank_{ui} = 0$% signifies that $i$ is predicted as the highest recommended item for $u$. Similarly, $rank_{ui} = 100$% signifies that $i$ is predicted as the lowest recommended item for $u$. 
+$rank_{ui} = 0$% signifies that $i$ is predicted as the highest recommended item for $u$. Similarly, $rank_{ui} = 100$% signifies that $i$ is predicted as the lowest recommended item for $u$.
 
 ## 4.3 Result
 ![enter image description here](https://d3i71xaburhd42.cloudfront.net/45283c1b4fdd3c1dcd14031f7f8e0e603a7fc084/7-Figure2-1.png)
 
 
-# Reference
+### Reference
 * Johnson, Christopher C. "Logistic matrix factorization for implicit feedback data." _Advances in Neural Information Processing Systems_ 27 (2014): 78.
 * Hu, Yifan, Yehuda Koren, and Chris Volinsky. "Collaborative filtering for implicit feedback datasets." _2008 Eighth IEEE International Conference on Data Mining_. Ieee, 2008.
