@@ -6,7 +6,7 @@ use_math: true
 ---
 This [paper](http://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf) presents Logistic Matrix Factorization, a new probabilistic model for matrix factorization with implicit feedback. The model has benefit that it can model the probability that a user will prefer a specific item.  It compared Logistic MF with [IMF](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4781121)(Implicit Matrix Factorization) model using MPR evaluation metric and showed it to outperform IMF.  
 
-
+---
 # **1. Problem Setup and Notation**  
 Assume that we have a set of non-negative feedback values associated with each pair of users and items in our domain.
 * $U = \left( u_1, \cdots, u_n \right)$: a group of $n$ users
@@ -17,7 +17,7 @@ For any entries $r_{ui}$ where user $u$ does not interact with item $i$, place 0
 Then, our goal is to find the top recommended items for each user for each item that they have not yet interacted with.
 
 
-
+---
 # **2. Logistic MF**
 ### 2.1 Matrix Factorization
 Factorizing the observation matrix $\mathbf{R}$ by 2 lower dimensional matrices $ \mathbf{X}\_{n \times f}$ and $\mathbf{Y}\_{m \times f}$ ,where $f=$ the number of latent factors.
@@ -31,6 +31,7 @@ $$
 \mathbf{y}_i ^T= \begin{pmatrix} y_{i1}  \\ \vdots\\ y_{in} \end{pmatrix}
  $$
 
+---
 ### 2.2 Define Random Variable
 Let $l_{ui}$ be the event that user $u$ has chosen to interact with item $i$.
 
@@ -55,6 +56,7 @@ p(l_{ui}\vert \mathbf{x}_u, \mathbf{y}_i, \beta_u, \beta_i) = \frac{exp(\mathbf{
  \end{cases}
 $$
 
+---
 ### 2.3 Define Confidence  
 
 $$  
@@ -69,7 +71,7 @@ c_{ui} = \alpha r_{ui}  =
 \end{cases}  
 $$
 
-
+---
 ### 2.4 Bayes Theorem  
 
 $$
@@ -106,7 +108,7 @@ $$
  -\frac{\lambda}{2} \lVert \mathbf{x}_u\rVert^2 - \frac{\lambda}{2} \lVert \mathbf{y}_i\rVert^2
 $$  
 
-
+---
 # **3. Optimization**
 Our goal is to learn $\mathbf{X}, \mathbf{Y}, \beta_u \beta_i$ that maximize the log posterior.
 
@@ -121,16 +123,16 @@ $$
 
 #### Partial derivatives  
 $$
-\frac{\partial}{\partial \mathbf{y}\_i} \log p(\mathbf{X}, \mathbf{Y}, \beta_u, \beta_i \vert \mathbf{R}) = \sum_{u}\alpha r_{ui}\mathbf{x}\_u - \frac{(1+\alpha r_{ui})\mathbf{x}_u \exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i))}
+\frac{\partial}{\partial \mathbf{y}_i} \log p(\mathbf{X}, \mathbf{Y}, \beta_u, \beta_i \vert \mathbf{R}) = \sum_{u}\alpha r_{ui}\mathbf{x}_u - \frac{(1+\alpha r_{ui})\mathbf{x}_u \exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i))}
 {1+\exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i))} - \lambda \mathbf{y}_i\\
-\frac{\partial}{\partial \mathbf{x}\_u} \log p(\mathbf{X}, \mathbf{Y}, \beta_u, \beta_i \vert \mathbf{R}) = \sum_{u}\alpha r_{ui}\mathbf{y}\_i - \frac{(1+\alpha r_{ui})\mathbf{y}_i \exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i))}
+\frac{\partial}{\partial \mathbf{x}_u} \log p(\mathbf{X}, \mathbf{Y}, \beta_u, \beta_i \vert \mathbf{R}) = \sum_{u}\alpha r_{ui}\mathbf{y}_i - \frac{(1+\alpha r_{ui})\mathbf{y}_i \exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i))}
 {1+\exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i))} - \lambda \mathbf{x}_u\\
 \frac{\partial}{\partial \beta_i}\log p(\mathbf{X}, \mathbf{Y}, \beta_u, \beta_i \vert \mathbf{R}) = \sum_{u}\alpha r_{ui} - \frac{(1+\alpha r_{ui}) \exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i)))}{1+\exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i)))}\\
 \frac{\partial}{\partial \beta_u}\log p(\mathbf{X}, \mathbf{Y}, \beta_u, \beta_i \vert \mathbf{R}) = \sum_{u}\alpha r_{ui} - \frac{(1+\alpha r_{ui}) \exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i)))}{1+\exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i)))}
 $$
 
 
-
+---
 # **4. Experimental Study**
 It compared Logistic MF with [IMF](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4781121)(Implicit Matrix Factorization) model using MPR evaluation metric. The most improvement of Logistic MF to IMF comes from its ability to outperform IMF under a fewer number of latent factors.  
 
