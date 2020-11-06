@@ -19,6 +19,7 @@ In real world scenarios most user feedback is not explicit but implicit. Implici
 The task of personalized ranking is to provide a user with a ranked list of items. An example is an online shop that wants to recommend a personalized ranked list of items that the user might want to buy.
 
 ### 2.1 Formalization
+
 $$
 U = \text{the set of all users}\\
 I = \text{the set of all items}\\
@@ -35,3 +36,5 @@ The task of the recommender system is to provide the user with a personalized to
 
 ### 2.2 Analysis of the problem setting
 Machine learning approaches for item recommenders typically create the training data from $S$ by giving pairs $(u, i) \in S$ a positive class label and all other combinations in $(U \times I) \setminus S$ a negative one.
+<p align="center">
+<img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/bpr_figure_1.PNG?raw=true" alt="figure1"  width="400"/>
