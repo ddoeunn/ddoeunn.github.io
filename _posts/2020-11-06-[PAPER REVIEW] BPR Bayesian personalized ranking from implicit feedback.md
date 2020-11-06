@@ -15,7 +15,7 @@ In real world scenarios most user feedback is not explicit but implicit. Implici
 * missing values : the user might want to buy the item in the future.
 
 ---
-# 2. Personalized Ranking
+# **2. Personalized Ranking**
 The task of personalized ranking is to provide a user with a ranked list of items. An example is an online shop that wants to recommend a personalized ranked list of items that the user might want to buy.
 
 ### 2.1 Formalization
@@ -35,6 +35,38 @@ The task of the recommender system is to provide the user with a personalized to
 * $\forall i, j, k \in I : i>_u j \vee j >_u k \Rightarrow i >_u k$ (transitivity)
 
 ### 2.2 Analysis of the problem setting
-Machine learning approaches for item recommenders typically create the training data from $S$ by giving pairs $(u, i) \in S$ a positive class label and all other combinations in $(U \times I) \setminus S$ a negative one.
+Machine learning approaches for item recommenders typically create the training data from $S$ by giving pairs $(u, i) \in S$ a positive class label and all other combinations in $(U \times I) \setminus S$ a negative one. That means a model with enough expressiveness (that can fit the training data exactly) cannot rank at all as it predicts only 0s.
 <p align="center">
 <img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/bpr_figure_1.PNG?raw=true" alt="figure1"  width="400"/>
+
+This paper uses a different approach by using item pairs as training data and optimize for correctly ranking item pairs. Assume that :
+* If item $i$ has been viewed by user $u$ (i.e. $(u, i) \in S$), then the user prefers this item over all other non-observed items.
+* For items that have both been seen by a user, we cannot infer any preference.
+* For items that have not seen yet by a user, we cannot infer any preference.
+
+To formalize this, create training dataset $D_S : U \times I \times I$ by $D_S := \{ (u, i, j) \vert i \in I^+_u \wedge j \in I \setminus I^+_u \}$
+<p align="center">
+<img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/bpr_figure_2.PNG?raw=true" alt="figure1"  width="400"/>
+
+This approach has 2 advantages:
+* It also gives information to unobserved items so that they can be learned indirectly.
+* It can also rank unobserved items.
+
+---
+# **3. BPR: Bayesian Personalized Ranking**
+### 3.1 BPR Optimization criterion
+The Bayesian formulation ofnding the correct personalized ranking for all items $i \in I$ is to maximize the following posterior probability where $\Theta$ represents the parameter vector of an arbitrary model class.
+$$
+p(\Theta \vert >_u) \propto p(>_u \vert \Theta)p(\Theta)
+$$
+
+Assume that :
+* all users act independently of each other.
+* the ordering of each pair of items $(i, j)$ for a specific user is independent of the ordering of every other pair.
+
+Then user-specific likelihood function $p(>_u \vert \Theta)$ can be rewitten as :
+$$
+\prod_{u \in U}p(>_u \lvert \Theta)
+= \prod_{(u, i, j) \in U \times I \times I}p(i >_u j \vert \Theta )^{\delta((u, i, j) \in D_S)}
+\left(1- p(i >_u j \vert \Theta )\right)^{\delta((u, i, j) \notin D_S)}
+$$
