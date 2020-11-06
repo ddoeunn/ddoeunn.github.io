@@ -171,7 +171,7 @@ $$
 * Optimization algorithm with bootstrapping based SGD with learning rate $\alpha$ and regularization $\lambda_{\Theta}$
 
 <p align="center">
-<img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/bpr_algorithm.PNG?raw=true" alt="algorithm"  width="400">
+<img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/bpr_algorithm.PNG?raw=true" alt="algorithm"  width="350">
 </p>
 
 * Why SGD?
@@ -239,7 +239,7 @@ $$
 #### Result
 
 <p align="center">
-<img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/bpr_result.PNG?raw=true" alt="result"  width="400">
+<img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/bpr_result.PNG?raw=true" alt="result"  width="550">
 </p>
 
 ---
