@@ -1,7 +1,7 @@
 ---
 layout: post
 title: PAPER REVIEW_Factorization Machines
-tags: [paper review, recommender system, matrix factorization, implicit feedback, Bayesian]
+tags: [paper review, recommender system, matrix factorization]
 use_math: true
 ---
 
