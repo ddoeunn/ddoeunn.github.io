@@ -5,7 +5,7 @@ tags: [paper review, recommender system, matrix factorization]
 use_math: true
 ---
 
-This paper introduces Factorization Machines(FM) which are a general predictor working with any real valued feature vector.(In contrast to this, other factorization models work only on very restricted input data.)  FMs model all interaction between variables using factorized parameters. Thus they are able to estimate interactions even in problems with huge sparsity like recommender systems. Also, FMs have advantage that the model equation of FMs can be calculated in linear time and thus FMs can be optimized directly.
+This [paper](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=5694074&casa_token=iTXf467ebBkAAAAA:ucq_oZrtnr-1UuHTjZ9LrRwraw9iOjXmaAMWuBqTrHEAzDMxao1Mv-TTqf7m0flmNdpUppByN4Q) introduces Factorization Machines(FM) which are a general predictor working with any real valued feature vector.(In contrast to this, other factorization models work only on very restricted input data.)  FMs model all interaction between variables using factorized parameters. Thus they are able to estimate interactions even in problems with huge sparsity like recommender systems. Also, FMs have advantage that the model equation of FMs can be calculated in linear time and thus FMs can be optimized directly.
 
 ---
 # **1. Problem Set up and Notations**
@@ -122,3 +122,8 @@ $$
 * FMs allow parameter estimation under very sparse data where SVMs fail.
 * FMs have linear complexity, can be optimized in the primal
 * FMs are a general predictor that can work with any real valued feature vector.
+
+
+---
+### Reference
+[[1]](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=5694074&casa_token=iTXf467ebBkAAAAA:ucq_oZrtnr-1UuHTjZ9LrRwraw9iOjXmaAMWuBqTrHEAzDMxao1Mv-TTqf7m0flmNdpUppByN4Q)Rendle, Steffen. "Factorization machines." 2010 IEEE International Conference on Data Mining. IEEE, 2010.
