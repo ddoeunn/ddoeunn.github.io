@@ -1,7 +1,7 @@
 ---
 layout: post
 title: PAPER REVIEW_Factorization Machines
-tags: [paper review, recommender system, matrix factorization]
+tags: [paper review, recommender system, matrix factorization, factorization machine]
 use_math: true
 ---
 
