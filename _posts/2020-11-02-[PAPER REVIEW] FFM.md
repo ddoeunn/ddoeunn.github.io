@@ -10,7 +10,7 @@ Click-through rate(CTR) prediction plays an important role in computational adve
 ---
 # **1. CTR Dataset**
 For most CTR datasets, "features" can be grouped into "field". In
-Table1: example, three features ESPN, Vogue, and NBC, belong to theeld Publisher, and the other three features Nike, Gucci, and Adidas, belong to the eld Advertiser. FFM is a variant of FM that utilizes this information.
+Table1: example, three features ESPN, Vogue, and NBC, belong to the field Publisher, and the other three features Nike, Gucci, and Adidas, belong to the eld Advertiser. FFM is a variant of FM that utilizes this information.
 
 <p align="center">
 <img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/ffm_table1.PNG?raw=true"  alt="ctr example"  width="400">
@@ -85,4 +85,121 @@ $$
 
 ---
 ### 3.1 Solving the Optimization Problem
-#### sub-gradient
+* Use stochastic gradient methods and AdaGrad.
+* The initial values of $\mathbf{w}$ are randomly sampled from a uniform distribution between $[0, \frac{1}{\sqrt{k}}]$.
+* The initial values of $G$ (accumulated sum of squared gradient for each coordinate $d=1, \cdots, k$) are set to one in order to prevent a large value of $(G_{j_1, f_2})^{-\frac{1}{2}}\_d$.
+* At each step of SG a data point $(y, \mathbf{x})$ is sampled for updating $\mathbf{w}_{j_1, f_2}$ and $\mathbf{w}\_{j_2, f_1}$.
+* Beacause $\mathbf{x}$ is highly sparse in this application, only update dimensions with non-zero values.
+
+
+#### Optimization Problem
+
+$$
+\underset{\mathbf{w}}{min} \frac{\lambda}{2} \lVert \mathbf{w} \rVert^2_2 + \underset{i=1}{\sum^m}\log (1+\exp (-y_i \phi_{FFM}(\mathbf{w}, \mathbf{x})))
+$$
+
+#### Sub-gradient
+
+$$
+\mathbf{g}_{j_1, f_2} \equiv
+\nabla_{\mathbf{w}_{j_1, f_2}}f(\mathbf{w}) = \lambda \cdot
+\mathbf{w}_{j_1, f_2} +
+\kappa \cdot \mathbf{w}_{j_2, f_1}
+x_{j_1} x_{j_2}\\
+\mathbf{g}_{j_2, f_1} \equiv
+\nabla_{\mathbf{w}_{j_2, f_1}}f(\mathbf{w}) = \lambda \cdot
+\mathbf{w}_{j_2, f_1} +
+\kappa \cdot \mathbf{w}_{j_1, f_2}
+x_{j_1} x_{j_2}
+$$
+
+<p align="center">
+where $\kappa = \frac{\partial \log (1+\exp (-y \phi_{FFM}(\mathbf{w}, \mathbf{x})))}{\partial \phi_{FFM}(\mathbf{w, x})} = \frac{-y}{1+\exp (y \phi_{FFM}(\mathbf{w}, \mathbf{x}))}$
+</p>
+
+#### Accumulate the sum of squared gradient
+for each coordinate $d=1, \cdots, k$, the sum of squared gradient is accumulated:
+
+$$
+(G_{j_1, f_2})_d \leftarrow
+(G_{j_1, f_2})_d +
+(g_{j_1, f_2})^2_d\\
+(G_{j_2, f_1})_d \leftarrow
+(G_{j_2, f_1})_d +
+(g_{j_2, f_1})^2_d
+$$
+
+
+#### Update Rule
+
+$$
+(w_{j_1, f_2})_d \leftarrow
+(w_{j_1, f_2})_d -
+\frac{\eta}{\sqrt{(G_{j_1, f_2})_d}}
+(g_{j_1, f_2})_d\\
+(w_{j_2, f_1})_d \leftarrow
+(w_{j_2, f_1})_d -
+\frac{\eta}{\sqrt{(G_{j_2, f_1})_d}}
+(g_{j_2, f_1})_d
+$$
+
+<p align="center">
+where $\eta$ is a user-specified learning rate.
+</p>
+
+#### Algorithm
+<p align="center">
+<img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/ffm_algorithm1.PNG?raw=true"  alt="algorithm"  width="400">
+</p>
+
+
+---
+### 3.2 Adding Field Information
+*  LIBSVM data format:
+Each (feat, val) pair indicates feature index and value.
+
+<p align="center">
+<img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/ffm_datatype1.PNG?raw=true"  alt="dataformat"  width="400">
+</p>
+
+
+* FFM data format:
+Extend LIBSVM format, must assign the corresponding field to each feature.  
+
+<p align="center">
+<img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/ffm_datatype2.PNG?raw=true"  alt="dataformat"  width="400">
+</p>
+
+---
+#### Categorical Features
+Apply same setting as LIBSVM that features with zero values are not stored. Every categorical feature is transformed to several binary ones. Consider each category as a field to add the field information.
+
+<p align="center">
+<img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/ffm_example1.PNG?raw=true"  alt="example"  width="400">
+</p>
+
+The above example instance becomes :
+
+<p align="center">
+<img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/ffm_example2.PNG?raw=true"  alt="example"  width="400">
+</p>
+
+---
+#### Numerical features
+
+* Example data
+<p align="center">
+<img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/ffm_example3.PNG?raw=true"  alt="example"  width="400">
+</p>
+
+1. treat each feature as a dummy field.
+
+<p align="center">
+<img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/ffm_example4.PNG?raw=true"  alt="example"  width="400">
+</p>
+
+2. discretize each numerical feature to a categorical one and then use the same setting for categorical features to add field information
+
+<p align="center">
+<img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/ffm_example5.PNG?raw=true"  alt="example"  width="400">
+</p>
