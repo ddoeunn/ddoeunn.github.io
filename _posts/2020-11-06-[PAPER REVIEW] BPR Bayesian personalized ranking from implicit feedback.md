@@ -244,7 +244,7 @@ $$
 
 ---
 ### Reference
-* [[1]](https://arxiv.org/ftp/arxiv/papers/1205/1205.2618.pdf) Rendle, Steffen, et al. "BPR: Bayesian personalized ranking from implicit feedback." arXiv preprint arXiv:1205.2618 (2012).
-* [[2]](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=4781121&casa_token=bJF8v8Y6kFkAAAAA:lAHdDgbEF1rw-OTWiHfRECHNmbfI197xpGoCi8M1XiZyR-F6g4d-rA8achQVldvIaetfkKJ_5hU) Hu, Yifan, Yehuda Koren, and Chris Volinsky. "Collaborative filtering for implicit feedback datasets." 2008 Eighth IEEE International Conference on Data Mining. Ieee, 2008.
-* [[3]](https://proceedings.neurips.cc/paper/2007/file/d7322ed717dedf1eb4e6e52a37ea7bcd-Paper.pdf) Mnih, Andriy, and Russ R. Salakhutdinov. "Probabilistic matrix factorization." Advances in neural information processing systems. 2008.
-* [[4]](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=4781145&casa_token=U34--S28j0sAAAAA:ffdQNKWVBOYHh-jxD9ckYg8QzvnUDc-WWm-SpxJLAqDUh8BntLKVykZ4e1i-aWMvMOP9zmCEeis&tag=1) Pan, Rong, et al. "One-class collaborative filtering." 2008 Eighth IEEE International Conference on Data Mining. IEEE, 2008.
+ [[1]](https://arxiv.org/ftp/arxiv/papers/1205/1205.2618.pdf) Rendle, Steffen, et al. "BPR: Bayesian personalized ranking from implicit feedback." arXiv preprint arXiv:1205.2618 (2012).  
+ [[2]](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=4781121&casa_token=bJF8v8Y6kFkAAAAA:lAHdDgbEF1rw-OTWiHfRECHNmbfI197xpGoCi8M1XiZyR-F6g4d-rA8achQVldvIaetfkKJ_5hU) Hu, Yifan, Yehuda Koren, and Chris Volinsky. "Collaborative filtering for implicit feedback datasets." 2008 Eighth IEEE International Conference on Data Mining. Ieee, 2008.  
+ [[3]](https://proceedings.neurips.cc/paper/2007/file/d7322ed717dedf1eb4e6e52a37ea7bcd-Paper.pdf) Mnih, Andriy, and Russ R. Salakhutdinov. "Probabilistic matrix factorization." Advances in neural information processing systems. 2008.  
+ [[4]](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=4781145&casa_token=U34--S28j0sAAAAA:ffdQNKWVBOYHh-jxD9ckYg8QzvnUDc-WWm-SpxJLAqDUh8BntLKVykZ4e1i-aWMvMOP9zmCEeis&tag=1) Pan, Rong, et al. "One-class collaborative filtering." 2008 Eighth IEEE International Conference on Data Mining. IEEE, 2008.
