@@ -1,9 +1,10 @@
 ---
 layout: post
-title: PAPER REVIEW_Field-aware Factorization Machines for CTR prediction
+title: PAPER REVIEW-Field-aware Factorization Machines for CTR prediction
 tags: [paper review, recommender system, matrix factorization, factorization machine, CTR]
 use_math: true
 ---
+***Juan, Yuchin, et al. 2016 "Field-aware factorization machines for CTR prediction."***  
 
 Click-through rate(CTR) prediction plays an important role in computational advertising. This [paper](https://dl.acm.org/doi/pdf/10.1145/2959100.2959134?casa_token=2HFKgPvmUnQAAAAA:74DUN0wTfUgZu92OPlmGQsIpTlPVqJv7Dzjspa_ZMVJZ-k5j4e-Cw7hPzKusLJNY30O7VG8TXvcXCgI) establishes Field-aware Factorization Machines(FFM) as an effective method for classifying large sparse data including CTR prediction. FFM is a variant of [FM](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=5694074) that utilizes information that features can be grouped into field for most CTR dataset.  
 It compared FFM with Logistic regression(LM), Polynomial regression(Poly2) and FM using logloss as evaluation metric. FFM outperform other models in terms of logloss but also requires longer training time that LM and FM.  

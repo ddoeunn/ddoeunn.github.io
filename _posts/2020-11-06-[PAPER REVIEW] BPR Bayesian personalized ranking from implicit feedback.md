@@ -1,10 +1,11 @@
 ---
 layout: post
-title: PAPER REVIEW_BPR Bayesian personalized ranking from implicit feedback
+title: PAPER REVIEW-BPR Bayesian personalized ranking from implicit feedback
 tags: [paper review, recommender system, matrix factorization, implicit feedback, Bayesian]
 use_math: true
 ---
 
+***Rendle, Steffen, et al. 2012 "BPR: Bayesian personalized ranking from implicit feedback"***  
 
 This [paper](https://arxiv.org/ftp/arxiv/papers/1205/1205.2618.pdf) presents a generic optimization criterion BPR-OPT for personalized ranking from implicit feedback that is the maximum posterior estimator derived from a Bayesian analysis of the problem. Unlike personalized ranking(also called item recommendation) from implicit feedback like [Matrix Factorization(MF)](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=4781121&casa_token=mfl1oU80aesAAAAA:pwVQVY_a2BEmxXAJGf0Y7UxU8IsVKvk2nhCE4Fm07oUD8FAB5k9aPMlC9EynZ83VD1ScaFuupA4&tag=1) or Adaptive kNN, BPR is directly optimized for ranking.  
 It also provide a generic learning algorithm for optimizing models with respect to BPR-OPT(based on stochastic gradient descent with bootstrap sampling). And it show how to apply this method to recommender models: MF and adaptive kNN.

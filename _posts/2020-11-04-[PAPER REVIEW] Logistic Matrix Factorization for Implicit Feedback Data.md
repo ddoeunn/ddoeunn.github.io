@@ -1,9 +1,12 @@
 ---
 layout: post
-title: PAPER REVIEW_Logistic Matrix Factorization for Implicit Feedback Data
+title: PAPER REVIEW-Logistic Matrix Factorization for Implicit Feedback Data
 tags: [paper review, recommender system, matrix factorization, implicit feedback]
 use_math: true
 ---
+
+***Johnson, Christopher C. 2014 "Logistic matrix factorization for implicit feedback data."***  
+
 This [paper](http://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf) presents Logistic Matrix Factorization, a new probabilistic model for matrix factorization with implicit feedback. The model has benefit that it can model the probability that a user will prefer a specific item.  It compared Logistic MF with [IMF](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4781121)(Implicit Matrix Factorization) model using MPR evaluation metric and showed it to outperform IMF.  
 
 ---
