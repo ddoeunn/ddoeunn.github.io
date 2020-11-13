@@ -11,5 +11,5 @@ https://ddoeunn.github.io/
 * Rendle, Steffen, et al. 2012 “BPR: Bayesian personalized ranking from implicit feedback”
 
 
-## Recommender System Paper Summary
+## Recommender System Summary
 * Explicit feedback and Implicit feedback
