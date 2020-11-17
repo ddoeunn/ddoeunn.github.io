@@ -25,14 +25,31 @@ Then, our goal is to find the top recommended items for each user for each item 
 ### 2.1 Matrix Factorization
 Factorizing the observation matrix $\mathbf{R}$ by 2 lower dimensional matrices $ \mathbf{X}\_{n \times f}$ and $\mathbf{Y}\_{m \times f}$ ,where $f=$ the number of latent factors.
 
-$$ \mathbf{R} \approx \mathbf{X}_{n \times f}
-\mathbf{Y}^T_{m \times f} $$
+$$
+\begin{align*}
+\mathbf{R} \approx \mathbf{X}_{n \times f}
+\mathbf{Y}^T_{m \times f}
+&=\begin{pmatrix}
+\mathbf{x}_1 \\
+\vdots \\
+\mathbf{x}_n
+\end{pmatrix}\begin{pmatrix}
+\mathbf{y}_1^T & \cdots & \mathbf{y}_m^T
+\end{pmatrix} \\
+&= \begin{pmatrix}
+\mathbf{x}_1\mathbf{y}_1^T & \cdots & \mathbf{x}_1\mathbf{y}_m^T \\
+\vdots & \ddots & \vdots \\
+\mathbf{x}_n\mathbf{y}_1^T & \cdots & \mathbf{x}_n\mathbf{y}_m^T
+\end{pmatrix}
+\end{align*}
+$$
 
 $$
 \mathbf{X}_{n \times f} = \begin{pmatrix} \mathbf{x}_1  \\ \vdots\\ \mathbf{x}_n \end{pmatrix} ,\mathbf{Y}_{m \times f} = \begin{pmatrix} \mathbf{y}_1  \\ \vdots\\ \mathbf{y}_m \end{pmatrix},
-\mathbf{x}_u^T = \begin{pmatrix} x_{u1}  \\ \vdots\\ x_{um} \end{pmatrix},
-\mathbf{y}_i ^T= \begin{pmatrix} y_{i1}  \\ \vdots\\ y_{in} \end{pmatrix}
+\mathbf{x}_u^T = \begin{pmatrix} x_{u1}  \\ \vdots\\ x_{uf} \end{pmatrix},
+\mathbf{y}_i ^T= \begin{pmatrix} y_{i1}  \\ \vdots\\ y_{if} \end{pmatrix}
  $$
+
 
 ---
 ### 2.2 Define Random Variable
@@ -87,51 +104,97 @@ Assume that all entries of $\mathbf{R}$ are independent.
 
 $$
 L(\mathbf{R}\vert \mathbf{X, Y}, \beta_u, \beta_i) =
-\prod_{u, i}p(l_{ui}\vert\mathbf{x}_u, \mathbf{y}_i, \beta_u, \beta_i)^{\alpha r_{ui}} \times \left( 1-p(l_{ui}\vert\mathbf{x}_u, \mathbf{y}_i, \beta_u, \beta_i) \right)
+\prod_{u, i}p(l_{ui}\vert\mathbf{x}_u, \mathbf{y}_i, \beta_u, \beta_i)^{l_{ui}} \times \left( 1-p(l_{ui}\vert\mathbf{x}_u, \mathbf{y}_i, \beta_u, \beta_i) \right)^{1-l_{ui}}
 $$
+
+* Log Likelihood
+
+$$
+\begin{align*}
+\log L(\mathbf{R}\vert \mathbf{X, Y}, \beta_u, \beta_i) &=
+\underset{u, i}{\sum}\left\{ l_{ui} \log \left( p(l_{ui} \vert \mathbf{x}_u, \mathbf{y}_i, \beta_u, \beta_i) \right)
++(1-l_{ui}) \log \left( 1-p(l_{ui} \vert \mathbf{x}_u, \mathbf{y}_i, \beta_u, \beta_i) \right)
+\right\}\\
+&= \underset{u, i}{\sum}\left\{
+l_{ui}  \exp (\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i)
+-l_{ui} \log (1+exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i))\\
+-(1-l_{ui}) \log (1+ exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i))
+\right\}\\
+&=\underset{u, i}{\sum}\left\{ l_{ui}  exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i)
+-\log (1+ exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i))
+ \right\}
+\end{align*}
+$$
+
+
+---
 #### Prior Probability  
 
 $$
 p(\mathbf{X}\vert \sigma^2) = \prod_{u}N(\mathbf{x}_u \vert \mathbf{0}, \sigma_u^2\mathbf{I})
 $$
 
+$$
+p(\mathbf{Y}\vert \sigma^2) = \prod_{u}N(\mathbf{y}_i \vert \mathbf{0}, \sigma_i^2\mathbf{I})
+$$
+
+* Multivariate Normal Dist.
+
+$$
+\mathbf{X} \sim N_k(\mathbf{\mu}, \mathbf{\Sigma})\\
+f_\mathbf{X}(\mathbf{x}) =
+\frac{1}{(2 \pi)^{d/2} \lvert \Sigma \rvert^{1/2}}
+\exp \left(-\frac{1}{2}(\mathbf{x-\mu})^T\mathbf{\Sigma}^{-1}(\mathbf{x-\mu})  \right)
+$$
+
+---
+
 ####  Posterior Probability
 Taking the log of posterior and replacing constant terms with a scaling parameter $\lambda$.  
 
 $$
-\log p(\mathbf{X}, \mathbf{Y},\beta_u, \beta_i \vert \mathbf{R})
-\propto \log p(\mathbf{R}\vert \mathbf{X}, \mathbf{Y},\beta_u, \beta_i ) + \log p(\mathbf{X}) + \log p(\mathbf{Y})
-$$
-
-$$
-\log p( \mathbf{X}, \mathbf{Y},\beta_u, \beta_i \vert \mathbf{R})\\
-\propto \sum_{u, i} \{ \alpha r_{ui} \log p(l_{ui} \vert \mathbf{x}_u, \mathbf{y}_i, \beta_u, \beta_i)+\log \left ( 1- p(l_{ui} \vert \mathbf{x}_u, \mathbf{y}_i, \beta_u, \beta_i)\right)\}\\
-+\sum_{u}\log N(\mathbf{x}_u \vert \mathbf{0}, \sigma^2_u\mathbf{I}) + \sum_{i}\log N(\mathbf{y}_i \vert \mathbf{0}, \sigma^2_i\mathbf{I})\\
-= \sum_{u, i}\alpha r_{ui}(\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i) - (1+\alpha r_{ui})\log (1+\exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i))\\
- -\frac{\lambda}{2} \lVert \mathbf{x}_u\rVert^2 - \frac{\lambda}{2} \lVert \mathbf{y}_i\rVert^2
+\begin{align*}
+&\log p(\mathbf{X}, \mathbf{Y},\beta_u, \beta_i \vert \mathbf{R})\\
+&\propto \log p(\mathbf{R}\vert \mathbf{X}, \mathbf{Y},\beta_u, \beta_i ) + \log p(\mathbf{X}) + \log p(\mathbf{Y})\\
+&\propto \sum_{u, i} \left\{ l_{ui} \cdot exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i)
+-\log (1+ exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i))
+ \right\}\\
+&~~~~~~~~~+\sum_{u}\log N(\mathbf{x}_u \vert \mathbf{0}, \sigma^2_u\mathbf{I}) + \sum_{i}\log N(\mathbf{y}_i \vert \mathbf{0}, \sigma^2_i\mathbf{I})\\
+&= \sum_{u, i}\left\{ l_{ui} exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i)
+-\log (1+ exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i))
+ \right\}-\frac{\lambda}{2} \lVert \mathbf{x}_u\rVert^2 - \frac{\lambda}{2} \lVert \mathbf{y}_i\rVert^2\\
+ &= \sum_{u, i}\left\{ \alpha r_{ui} exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i)
+ -\log (1+ exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i))
+  \right\}-\frac{\lambda}{2} \lVert \mathbf{x}_u\rVert^2 - \frac{\lambda}{2} \lVert \mathbf{y}_i\rVert^2
+\end{align*}
 $$  
 
 ---
 # **3. Optimization**
+### Optimization Problem
 Our goal is to learn $\mathbf{X}, \mathbf{Y}, \beta_u \beta_i$ that maximize the log posterior.
 
 $$
 \underset{\mathbf{X, Y}, \beta_u, \beta_i}{\operatorname{arg max}}\log p(\mathbf{X}, \mathbf{Y}, \beta_u, \beta_i \vert \mathbf{R})
 $$
 
+---
 ### ALS (Alternating Least Squares) Algorithm
 
 1. Fix the user vectors $\mathbf{X}$ and user bias $\beta_u$ and take a step towards the gradient of the item vectors $\mathbf{Y}$ and item bias $\beta_i$
 2. Fix the item vectors $\mathbf{Y}$ and item bias $\beta_i$ and take a step towards the gradient of the user vectors $\mathbf{X}$ and user bias $\beta_u$
 
 #### Partial derivatives  
+
 $$
-\frac{\partial}{\partial \mathbf{y}_i} \log p(\mathbf{X}, \mathbf{Y}, \beta_u, \beta_i \vert \mathbf{R}) = \sum_{u}\alpha r_{ui}\mathbf{x}_u - \frac{(1+\alpha r_{ui})\mathbf{x}_u \exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i))}
+\begin{align*}
+\frac{\partial}{\partial \mathbf{y}_i} \log p(\mathbf{X}, \mathbf{Y}, \beta_u, \beta_i \vert \mathbf{R}) &= \sum_{u}\alpha r_{ui}\mathbf{x}_u - \frac{(1+\alpha r_{ui})\mathbf{x}_u \exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i))}
 {1+\exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i))} - \lambda \mathbf{y}_i\\
-\frac{\partial}{\partial \mathbf{x}_u} \log p(\mathbf{X}, \mathbf{Y}, \beta_u, \beta_i \vert \mathbf{R}) = \sum_{u}\alpha r_{ui}\mathbf{y}_i - \frac{(1+\alpha r_{ui})\mathbf{y}_i \exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i))}
+\frac{\partial}{\partial \mathbf{x}_u} \log p(\mathbf{X}, \mathbf{Y}, \beta_u, \beta_i \vert \mathbf{R}) &= \sum_{u}\alpha r_{ui}\mathbf{y}_i - \frac{(1+\alpha r_{ui})\mathbf{y}_i \exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i))}
 {1+\exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i))} - \lambda \mathbf{x}_u\\
-\frac{\partial}{\partial \beta_i}\log p(\mathbf{X}, \mathbf{Y}, \beta_u, \beta_i \vert \mathbf{R}) = \sum_{u}\alpha r_{ui} - \frac{(1+\alpha r_{ui}) \exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i)))}{1+\exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i)))}\\
-\frac{\partial}{\partial \beta_u}\log p(\mathbf{X}, \mathbf{Y}, \beta_u, \beta_i \vert \mathbf{R}) = \sum_{u}\alpha r_{ui} - \frac{(1+\alpha r_{ui}) \exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i)))}{1+\exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i)))}
+\frac{\partial}{\partial \beta_i}\log p(\mathbf{X}, \mathbf{Y}, \beta_u, \beta_i \vert \mathbf{R}) &= \sum_{u}\alpha r_{ui} - \frac{(1+\alpha r_{ui}) \exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i)))}{1+\exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i)))}\\
+\frac{\partial}{\partial \beta_u}\log p(\mathbf{X}, \mathbf{Y}, \beta_u, \beta_i \vert \mathbf{R}) &= \sum_{u}\alpha r_{ui} - \frac{(1+\alpha r_{ui}) \exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i)))}{1+\exp (\mathbf{x}_u\mathbf{y}^T_i + \beta_u + \beta_i)))}
+\end{align*}
 $$
 
 
@@ -151,9 +214,11 @@ chosen a recall based evaluation metric MPR(Mean Percentage Ranking) due to the 
 $rank_{ui} = 0$% signifies that $i$ is predicted as the highest recommended item for $u$. Similarly, $rank_{ui} = 100$% signifies that $i$ is predicted as the lowest recommended item for $u$.
 
 ### 4.3 Result
-![result](https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/LMFresult.PNG?raw=true)
+<p align="center">
+<img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/LMFresult.PNG?raw=true" alt="result"  width="350">
+</p>
 
-
+---
 ### Reference
-* Johnson, Christopher C. "Logistic matrix factorization for implicit feedback data." _Advances in Neural Information Processing Systems_ 27 (2014): 78.
-* Hu, Yifan, Yehuda Koren, and Chris Volinsky. "Collaborative filtering for implicit feedback datasets." _2008 Eighth IEEE International Conference on Data Mining_. Ieee, 2008.
+[[1]](http://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf) Johnson, Christopher C. "Logistic matrix factorization for implicit feedback data." _Advances in Neural Information Processing Systems_ 27 (2014): 78.  
+[[2]](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4781121) Hu, Yifan, Yehuda Koren, and Chris Volinsky. "Collaborative filtering for implicit feedback datasets." _2008 Eighth IEEE International Conference on Data Mining_. Ieee, 2008.
