@@ -9,6 +9,8 @@ use_math: true
 
 This [paper](http://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf) presents Logistic Matrix Factorization, a new probabilistic model for matrix factorization with implicit feedback. The model has benefit that it can model the probability that a user will prefer a specific item.  It compared Logistic MF with [IMF](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4781121)(Implicit Matrix Factorization) model using MPR evaluation metric and showed it to outperform IMF.  
 
+*Implementation of LogistiMF using Numpy -> [here!](https://github.com/ddoeunn/recommender-system-implementation)*
+
 ---
 # **1. Problem Setup and Notation**  
 Assume that we have a set of non-negative feedback values associated with each pair of users and items in our domain.
@@ -116,11 +118,11 @@ $$
 +(1-l_{ui}) \log \left( 1-p(l_{ui} \vert \mathbf{x}_u, \mathbf{y}_i, \beta_u, \beta_i) \right)
 \right\}\\
 &= \underset{u, i}{\sum}\left\{
-l_{ui}  \exp (\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i)
+l_{ui}  (\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i)
 -l_{ui} \log (1+exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i))\\
 -(1-l_{ui}) \log (1+ exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i))
 \right\}\\
-&=\underset{u, i}{\sum}\left\{ l_{ui}  exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i)
+&=\underset{u, i}{\sum}\left\{ l_{ui}  (\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i)
 -\log (1+ exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i))
  \right\}
 \end{align*}
@@ -156,14 +158,14 @@ $$
 \begin{align*}
 &\log p(\mathbf{X}, \mathbf{Y},\beta_u, \beta_i \vert \mathbf{R})\\
 &\propto \log p(\mathbf{R}\vert \mathbf{X}, \mathbf{Y},\beta_u, \beta_i ) + \log p(\mathbf{X}) + \log p(\mathbf{Y})\\
-&\propto \sum_{u, i} \left\{ l_{ui} \cdot exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i)
+&\propto \sum_{u, i} \left\{ l_{ui} \cdot (\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i)
 -\log (1+ exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i))
  \right\}\\
 &~~~~~~~~~+\sum_{u}\log N(\mathbf{x}_u \vert \mathbf{0}, \sigma^2_u\mathbf{I}) + \sum_{i}\log N(\mathbf{y}_i \vert \mathbf{0}, \sigma^2_i\mathbf{I})\\
-&= \sum_{u, i}\left\{ l_{ui} exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i)
+&= \sum_{u, i}\left\{ l_{ui} (\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i)
 -\log (1+ exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i))
  \right\}-\frac{\lambda}{2} \lVert \mathbf{x}_u\rVert^2 - \frac{\lambda}{2} \lVert \mathbf{y}_i\rVert^2\\
- &= \sum_{u, i}\left\{ \alpha r_{ui} exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i)
+ &= \sum_{u, i}\left\{ \alpha r_{ui} (\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i)
  -\log (1+ exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i))
   \right\}-\frac{\lambda}{2} \lVert \mathbf{x}_u\rVert^2 - \frac{\lambda}{2} \lVert \mathbf{y}_i\rVert^2
 \end{align*}
