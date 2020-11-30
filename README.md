@@ -13,3 +13,4 @@ https://ddoeunn.github.io/
 
 ## Recommender System Summary
 * Explicit feedback and Implicit feedback
+* Evaluation of Recommender System Results
