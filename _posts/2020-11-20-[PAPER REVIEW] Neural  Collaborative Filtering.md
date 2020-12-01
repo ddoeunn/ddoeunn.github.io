@@ -180,6 +180,12 @@ where $\mathbf{W}_x, \mathbf{b}_x$ and $a_x$ denote the weight matrix, bias vect
 
 ---
 ### **3.4 Fusion of GMF and MLP**
+
+<p align="center">
+<img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/ncf_figure3.PNG?raw=true"  alt="ncf model"  width="400">
+</p>  
+
+
 * GMF : applies a linear kernel to model the latent feature interactions.
 * MLP : uses a non-linear kernel to learn the interaction function from data.
 * Allow GMF and MLP to learn separate embeddings, and combine the 2 models by concatenating their last hidden layer.  
