@@ -10,6 +10,7 @@ https://ddoeunn.github.io/
 * Johnson, Christopher C. 2014 [“Logistic matrix factorization for implicit feedback data.”](https://ddoeunn.github.io/2020/11/04/PAPER-REVIEW-Logistic-Matrix-Factorization-for-Implicit-Feedback-Data.html)
 * Rendle, Steffen, et al. 2012 [“BPR: Bayesian personalized ranking from implicit feedback”](https://ddoeunn.github.io/2020/11/06/PAPER-REVIEW-BPR-Bayesian-personalized-ranking-from-implicit-feedback.html)
 * He, Xiangnan, et al. 2017 [“Neural collaborative filtering.”](https://ddoeunn.github.io/2020/11/20/PAPER-REVIEW-Neural-Collaborative-Filtering.html)
+* Hu, Yifan, Yehuda Koren, et al. 2008 ["Collaborative filtering for implicit feedback datasets."]()
 
 
 ## Recommender System Summary
