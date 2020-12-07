@@ -59,6 +59,8 @@ w_{ij}  &= \begin{cases}
 \end{align*}
 $$
 
+---
+#### Weighting schemes
 <p align="center">
 <img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/wrmf_table1.PNG?raw=true"  alt="table1"  width="400">
 </p>
