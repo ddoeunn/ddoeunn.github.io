@@ -145,7 +145,7 @@ $$
 $$
 \mathbf{X} \sim N_k(\mathbf{\mu}, \mathbf{\Sigma})\\
 f_\mathbf{X}(\mathbf{x}) =
-\frac{1}{(2 \pi)^{d/2} \lvert \Sigma \rvert^{1/2}}
+\frac{1}{(2 \pi)^{k/2} \lvert \Sigma \rvert^{1/2}}
 \exp \left(-\frac{1}{2}(\mathbf{x-\mu})^T\mathbf{\Sigma}^{-1}(\mathbf{x-\mu})  \right)
 $$
 
@@ -165,8 +165,8 @@ $$
 &= \sum_{u, i}\left\{ l_{ui} (\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i)
 -\log (1+ exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i))
  \right\}-\frac{\lambda}{2} \lVert \mathbf{x}_u\rVert^2 - \frac{\lambda}{2} \lVert \mathbf{y}_i\rVert^2\\
- &= \sum_{u, i}\left\{ \alpha r_{ui} (\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i)
- -\log (1+ exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i))
+ &\propto \sum_{u, i}\left\{ \alpha r_{ui} (\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i)
+ -(1+\alpha r_{ui})\log (1+ exp(\mathbf{x}_u\mathbf{y}_i^T+\beta_u + \beta_i))
   \right\}-\frac{\lambda}{2} \lVert \mathbf{x}_u\rVert^2 - \frac{\lambda}{2} \lVert \mathbf{y}_i\rVert^2
 \end{align*}
 $$  
