@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Matrix Factorization Methods for Item Recommendation from Implicit Feedback - (1)
+title: Matrix Factorization for Item Recommendation from Implicit Feedback - (1)
 tags: [recommender system, implicit feedback, wmf, lmf, bpr, matrix factorization]
 use_math: true
 ---
