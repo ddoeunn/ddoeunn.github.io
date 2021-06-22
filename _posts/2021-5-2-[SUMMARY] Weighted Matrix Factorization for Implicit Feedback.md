@@ -6,7 +6,7 @@ use_math: true
 ---
 
 
-# **Matrix Factorization Methods for Implicit Feedback**
+***Matrix Factorization Methods for Item Recommendation from Implicit Feedback***
 
 One of the key methods of personalized recommendation is Collaborative Filtering (CF) which uses users' preferences for item based on their past interaction with items. CF approach has two categories, memory-based and model-based. Among model-based approaches, matrix factorization (MF) which projects users and items into shared latent factor space of reduced dimensionality is the most popular.  
 
