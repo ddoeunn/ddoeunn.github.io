@@ -138,7 +138,7 @@ where $\Theta$ is model parameters, $w$ is a weight function, $l$ is a loss func
 Here, $\hat{y}_{uij}(\Theta)$ is a real-valued function which captures the relative order between user $u$, item $i$ and item $j$.
 
 
-See next post "Matrix Factorization Methods for Implicit Feedback" -> [here!]()
+**See next post "Matrix Factorization Methods for Implicit Feedback" ->**[ here!](https://ddoeunn.github.io/2021/05/02/SUMMARY-Weighted-Matrix-Factorization-for-Implicit-Feedback_2.html)
 
 
 ---

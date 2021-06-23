@@ -11,7 +11,7 @@ See previous post -> [here!](https://ddoeunn.github.io/2021/05/02/SUMMARY-Weight
 
 * Weighted Regularized Matrix Factorization
 * Probabilistic Matrix Factorization
-* Pairwise Matrix Factorization -> See next post [here!]()
+* Pairwise Matrix Factorization
 
 ---
 # **1. Weighted Regularized Matrix Factorization**
@@ -26,7 +26,7 @@ Several strategies for defining weight function $w(u, i)$ have been proposed.
 
 
 $$
-L = \underset{u}{\sum}\underset{i}{\sum} w(u, i) \cdot (y_{ui} - \mathbf{p}_u^T \mathbf{q}_i)^2
+L = \underset{u}{\sum}\underset{i}{\sum} w(u, i) \cdot (y_{ui} - \boldsymbol{p}_u^T \boldsymbol{q}_i)^2
            + \lambda_U \lVert \boldsymbol{P} \rVert^2
            + \lambda_I \lVert \boldsymbol{Q} \rVert^2
 $$
@@ -135,8 +135,94 @@ $$
 
 where $\boldsymbol{W}^i = diag(w_{1i}, \cdots, w_{mi})$ and $\boldsymbol{y}_i = i^{th}$ column vector of $\boldsymbol{Y}$.
 
+<p align="center">
+<img src="https://github.com/ddoeunn/ddoeunn.github.io/blob/main/assets/img/post%20img/mf_algorithm1.PNG?raw=true" width=350>
+</p>
+
+---
+# **2. Probabilistic Matrix Factorization**
+## **2.1 Logistic Matrix Factorization**
+
+[Johnson, 2014](http://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf) proposed probabilistic matrix factorization for implicit feedback which models the probability that a user chooses an item by a logistic function.
+
+It assume a Bernoulli distribution on $y_{ui}$, which indicates whether the user $u$ interacts with the item $i$ and defines the probability that user $u$ interacts with item $i$ as follow
+
+$$
+\hat{y}\_{ui} = \boldsymbol{p}_{u}^T \boldsymbol{q}_i + \beta_u + \beta_i
+$$
+
+
+$$
+p(y_{ui} \vert \boldsymbol{p}_{u}, \boldsymbol{q}_i, \beta_u, \beta_i)
+= \sigma(\hat{y}_{ui})
+$$
+
+$$
+\text{where } \sigma(x) = 1/(1 + e^{-x}) \text{ logistic sigmoid function. }
+$$
+
+
+It also applied concept of confidence as in WRMF by assigning $\alpha r_{ui}$ to observed instances and 1 to unobserved. Increasing $\alpha$ places more weight on the observed instances while decreasing $\alpha$ places more weight on the unobserved. With assumption that all instances of $\boldsymbol{Y}$ are independent, the likelihood of $\boldsymbol{Y}$ given model parameters is obtained as follow.
+
+$$
+L(\boldsymbol{Y} \vert \boldsymbol{P}, \boldsymbol{Q}, \boldsymbol{\beta}) = \prod_{u, i} p(y_{ui} \vert \boldsymbol{p}\_u, \boldsymbol{q}\_i, \beta_i, \beta_j)^{\alpha r_{ui}}
+    (1 -  p(y_{ui} \vert \boldsymbol{p}_u, \boldsymbol{q}_i, \beta_i, \beta_j))
+$$
+
+And place a zero mean Gaussian priors on user and item latent factors.
+
+$$
+p(\boldsymbol{P} \vert \sigma^2_U) = \prod_{u} \mathcal{N}(\boldsymbol{p}_u \vert \sigma^2_U \boldsymbol{I})
+$$
+
+$$
+  p(\boldsymbol{Q} \vert \sigma^2_I) = \prod_{i} \mathcal{N}(\boldsymbol{q}_i \vert \sigma^2_I \boldsymbol{I})
+$$
+
+The log of the posterior distribution, which is objective function to be maximized, is obtained as follow by replacing constant terms with a scaling parameter $\lambda$.
+
+$$
+L = \underset{u}\sum \underset{i}\sum \alpha r_{ui} \hat{y}_{ui}
+        - (1 + \alpha r_{ui}) \ln (1 + \exp(\hat{y}_{ui}))
+        - \frac{\lambda}{2} \left( \lVert \boldsymbol{p}_u  \rVert^2 + \lVert \boldsymbol{q}_i  \rVert^2 \right)
+$$
+
+It performed alternating gradient ascent algorithm to find a local maximum of the objective function, which optimizes one parameter while leaving the other fixed and iterates this process alternatively. The partial derivatives are obtained as follow.
+
+$$
+\frac{\partial L}{\partial \boldsymbol{p}_u}
+            = \underset{i}\sum \alpha r_{ui}\boldsymbol{q}_i
+                - \frac{\boldsymbol{q}\_i (1 + \alpha r_{ui}) \exp (\boldsymbol{p}_u^T \boldsymbol{q}_i + \beta_u + \beta_i)}
+                        {1 + \exp (\boldsymbol{p}_u^T \boldsymbol{q}_i + \beta_u + \beta_i)}
+                - \lambda \boldsymbol{p}_u
+$$
+
+$$
+\frac{\partial L}{\partial \boldsymbol{q}_i}
+            = \underset{u}\sum \alpha r_{ui} \boldsymbol{p}_u
+                - \frac{\boldsymbol{p}_u (1 + \alpha r_{ui}) \exp (\boldsymbol{p}_u^T \boldsymbol{q}_i + \beta_u + \beta_i)}
+                        {1 + \exp (\boldsymbol{p}_u^T \boldsymbol{q}_i + \beta_u + \beta_i)}
+                - \lambda \boldsymbol{q}_i
+$$
+
+$$
+\frac{\partial L}{\partial \beta_u}
+            = \underset{i}\sum \alpha r_{ui}
+                - \frac{(1 + \alpha r_{ui}) \exp (\boldsymbol{p}_u^T \boldsymbol{q}_i + \beta_u + \beta_i)}
+                        {1 + \exp (\boldsymbol{p}_u^T \boldsymbol{q}_i + \beta_u + \beta_i)}
+$$
+
+$$
+\frac{\partial L}{\partial \beta_i}
+            = \underset{u} \sum \alpha r_{ui}
+                - \frac{(1 + \alpha r_{ui})\exp (\boldsymbol{p}_u^T \boldsymbol{q}_i + \beta_u + \beta_i) }
+                        {1 + \exp (\boldsymbol{p}_u^T \boldsymbol{q}_i + \beta_u + \beta_i)
+$$
+
+
 ---
 ## **Reference**
 [[1]](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=4781121&casa_token=mOQtn7Era6QAAAAA:xiWhrafDmzfE4Xbmw9CW952M_6zG1_O8Yd464auijGfTSZWhV7RsSwNZjfkz8liOQ3Z5uvyoLrA&tag=1) Hu, Yifan, Yehuda Koren, and Chris Volinsky. "Collaborative filtering for implicit feedback datasets." 2008 Eighth IEEE International Conference on Data Mining. Ieee, 2008.  
 [[2]](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=4781145&casa_token=bvg2l_uHBGsAAAAA:L7rgVq31qixKFqhy__TElXjo2FPrryQ2-96PSGxSpgLTPGDWmcMPEmBaxOl4_4QiNP_p58uig04) Pan, Rong, et al. "One-class collaborative filtering." 2008 Eighth IEEE International Conference on Data Mining. IEEE, 2008.  
-[[3]](https://dl.acm.org/doi/pdf/10.1145/2911451.2911489?casa_token=fI979xUDJ9oAAAAA:VEW3psI52dFmrbANoGTAkxq6sCsE22PnvGbkMf_8nm0p6yl-kvh8FLfDS2MB-LuSUmYMiJgbg7HZ8dM) He, Xiangnan, et al. "Fast matrix factorization for online recommendation with implicit feedback." Proceedings of the 39th International ACM SIGIR conference on Research and Development in Information Retrieval. 2016.
+[[3]](https://dl.acm.org/doi/pdf/10.1145/2911451.2911489?casa_token=fI979xUDJ9oAAAAA:VEW3psI52dFmrbANoGTAkxq6sCsE22PnvGbkMf_8nm0p6yl-kvh8FLfDS2MB-LuSUmYMiJgbg7HZ8dM) He, Xiangnan, et al. "Fast matrix factorization for online recommendation with implicit feedback." Proceedings of the 39th International ACM SIGIR conference on Research and Development in Information Retrieval. 2016.  
+[[4]](http://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf) Johnson, Christopher C. "Logistic matrix factorization for implicit feedback data." Advances in Neural Information Processing Systems 27.78 (2014): 1-9.
