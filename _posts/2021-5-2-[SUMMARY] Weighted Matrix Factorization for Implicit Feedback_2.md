@@ -148,7 +148,8 @@ where $\boldsymbol{W}^i = diag(w_{1i}, \cdots, w_{mi})$ and $\boldsymbol{y}_i = 
 It assume a Bernoulli distribution on $y_{ui}$, which indicates whether the user $u$ interacts with the item $i$ and defines the probability that user $u$ interacts with item $i$ as follow
 
 $$
-\hat{y}\_{ui} = \boldsymbol{p}_{u}^T \boldsymbol{q}_i + \beta_u + \beta_i
+\hat{y}_{ui} =
+\boldsymbol{p}_{u}^T \boldsymbol{q}_i + \beta_u + \beta_i
 $$
 
 
@@ -214,9 +215,7 @@ $$
 
 $$
 \frac{\partial L}{\partial \beta_i}
-            = \underset{u} \sum \alpha r_{ui}
-                - \frac{(1 + \alpha r_{ui})\exp (\boldsymbol{p}_u^T \boldsymbol{q}_i + \beta_u + \beta_i) }
-                        {1 + \exp (\boldsymbol{p}_u^T \boldsymbol{q}_i + \beta_u + \beta_i)
+= \underset{u} \sum \alpha r_{ui} - \frac{(1 + \alpha r_{ui})\exp (\boldsymbol{p}_u^T \boldsymbol{q}_i + \beta_u + \beta_i)}{1 + \exp (\boldsymbol{p}_u^T \boldsymbol{q}_i + \beta_u + \beta_i)}
 $$
 
 
