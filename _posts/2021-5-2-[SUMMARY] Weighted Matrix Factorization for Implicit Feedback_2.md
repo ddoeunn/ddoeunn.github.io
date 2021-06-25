@@ -262,8 +262,10 @@ where $\Theta$ is the model parameters.
 By the second assumption, user-specific likelihood function $ p(>_u \vert \Theta)$ can be rewritten as a product of single densities and by the totality and antisymmetry properties, it can be simplified as follow
 
 $$
+\begin{align*}
 \underset{u \in U} \prod p(>_u \vert \Theta) &= \underset{(u, i, j) \in U \times I \times I}\prod p(i >_u j \vert \Theta)^{\delta((u, i, j)\in D_s)} \cdot (1 - p(i >_u j \vert \Theta))^{\delta((u, i, j) \notin D_s)}\\
   &= \underset{(u, i, j) \in D_s}\prod p(i >_u j \vert \Theta)
+\end{align*}
 $$
 
 where $D_s = \{(u, i, j) \vert i \in I_u \wedge j \in I \setminus I_u \}$ and $\delta$ is the indicator function.  
