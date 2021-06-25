@@ -235,9 +235,9 @@ where $\hat{y}_{uij}(\Theta)$ is a real-valued function which captures the relat
 
 |      	|                   $\hat{y}_{ui}$                   	|          $\hat{y}_{uij}$          	|  $w(u, i, j)$ 	|       Reference       	|
 |:----:	|:--------------------------------------------------:	|:---------------------------------:	|:-------------:	|:---------------------:	|
-|  BPR 	|      $\boldsymbol{p}^T_{u}\boldsymbol{q}_{i}$      	|   $\hat{y}_{ui} - \hat{y}_{uj}$   	|       1       	|  [Rendle et al. [2012]](https://arxiv.org/ftp/arxiv/papers/1205/1205.2618.pdf) 	|
-| WBPR 	| $\boldsymbol{p}^T_{u}\boldsymbol{q}_{i} + \beta_i$ 	|   $\hat{y}_{ui} - \hat{y}_{uj}$   	| $w_u w_i w_j$ 	| [Gantner et al. [2012]](http://proceedings.mlr.press/v18/gantner12a/gantner12a.pdf) 	|
-| GBPR 	| $\boldsymbol{p}^T_{u}\boldsymbol{q}_{i} + \beta_i$ 	| $\hat{y}_{G_{ui}} - \hat{y}_{uj}$ 	|       1       	|  [Pan and Chen [2013]](http://www.comp.hkbu.edu.hk/~lichen/download/IJCAI2013_Pan.pdf)  	|
+|  BPR 	|      $\boldsymbol{p}^T_{u}\boldsymbol{q}_{i}$      	|   $\hat{y}\_{ui} - \hat{y}\_{uj}$   	|       1       	|  [Rendle et al. [2012]](https://arxiv.org/ftp/arxiv/papers/1205/1205.2618.pdf) 	|
+| WBPR 	| $\boldsymbol{p}^T_{u}\boldsymbol{q}_{i} + \beta_i$ 	|   $\hat{y}\_{ui} - \hat{y}\_{uj}$   	| $w_u w_i w_j$ 	| [Gantner et al. [2012]](http://proceedings.mlr.press/v18/gantner12a/gantner12a.pdf) 	|
+| GBPR 	| $\boldsymbol{p}^T_{u}\boldsymbol{q}_{i} + \beta_i$ 	| $\hat{y}\_{G_{ui}} - \hat{y}\_{uj}$ 	|       1       	|  [Pan and Chen [2013]](http://www.comp.hkbu.edu.hk/~lichen/download/IJCAI2013_Pan.pdf)  	|
 
 
 ## **3.1 Bayesian Personalized Ranking**
