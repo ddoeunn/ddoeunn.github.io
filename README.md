@@ -3,8 +3,10 @@
 
 https://ddoeunn.github.io/
 
-## 📝
-
+## 📝Matrix Factorization Methods for Item Recommendation from Implicit Feedback
+* [(1)](https://ddoeunn.github.io/2021/05/02/SUMMARY-Weighted-Matrix-Factorization-for-Implicit-Feedback_1.html)
+ Preliminaries - Problem setup and Notations / Matrix Factorization / Learning Objectives for Implicit Feedback
+ * [(2)](https://ddoeunn.github.io/2021/05/02/SUMMARY-Weighted-Matrix-Factorization-for-Implicit-Feedback_2.html) Matrix Factorization Methods for Implicit Feedback
 
 ## 📝Recommender System Paper Review
 * Rendle, Steffen. 2010 [“Factorization machines.”](https://ddoeunn.github.io/2020/11/01/PAPER-REVIEW-Factorization-Machines.html)
