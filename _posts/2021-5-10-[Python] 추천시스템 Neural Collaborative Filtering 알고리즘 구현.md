@@ -1,14 +1,11 @@
 ---
 layout: post
-title: [Python] Neural Collaborative Filtering Algorithm
+title: 추천시스템 Neural Collaborative Filtering 알고리즘 파이썬 구현
 tags: [recommender system, NCF, Collaborative Filtering, Matrix Factorization, Python]
 use_math: true
 ---
 
-
 ***추천시스템 NCF 알고리즘 파이썬 구현***
-
-title: [Python] 추천시스템 Neural Collaborative Filtering 알고리즘 구현
 
 * 논문 -> [He, Xiangnan, et al. "Neural collaborative filtering." Proceedings of the 26th international conference on world wide web. 2017.
 ](https://dl.acm.org/doi/pdf/10.1145/3038912.3052569?casa_token=FfITqllG5HMAAAAA:rI_bL7aiSwK9r061e8X7_SEIpBIfLd8_MGB3yMrIlj53dzlfvN97S_qZDIgKPepzSjjy5cFHEUgCgvY)
