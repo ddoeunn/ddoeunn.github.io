@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 추천시스템 Neural Collaborative Filtering 논문 리뷰, 알고리즘 파이썬 구현
+title: 추천시스템 Neural Collaborative Filtering 논문 리뷰 & 알고리즘 파이썬 구현
 tags: [recommender system, NCF, Collaborative Filtering, Matrix Factorization, Python]
 use_math: true
 ---
@@ -11,16 +11,13 @@ use_math: true
 ](https://dl.acm.org/doi/pdf/10.1145/3038912.3052569?casa_token=FfITqllG5HMAAAAA:rI_bL7aiSwK9r061e8X7_SEIpBIfLd8_MGB3yMrIlj53dzlfvN97S_qZDIgKPepzSjjy5cFHEUgCgvY)
 
 ### **목차**
-0. 문제 정의  
-1. Matrix Factorization  
-  1.1 Matrix Factorization이란?  
-  1.2 Matrix Factorization의 한계점
-2.  
+1. 문제 정의  
+2. Matrix Factorization - Matrix Factorization이란? / Matrix Factorization의 한계점  
 3.  
 4.  
 
 ---
-# **0. 문제 정의**
+# **1. 문제 정의**
 본 논문에서는 암시적 피드백 (Implicit Feedback)을 이용한 추천시스템 문제를 다룬다.
 
 암시적 피드백은 시청기록, 구매내역처럼 사용자의 선호도를 간접적으로 파악할 수 있는 데이터이다. 이와 상반되는 개념으로 명시적 피드백 (Explicit Feedback)이 있다. 명시적 피드백은 별점이나 좋아요/싫어요 버튼처럼 사용자가 직접적으로 자신의 선호를 나타낸 데이터이다.
@@ -50,9 +47,9 @@ $$
 
 
 ---
-# **1. Matrix Factorization**
+# **2. Matrix Factorization**
 
-## **1.1 Matrix Factorization이란?**
+## **2.1 Matrix Factorization이란?**
 Matrix Factorization(행렬분해)은 추천시스템의 Collaborative Filtering(협업 필터링) 방법론 중 model-based approach에 속하는 방법이다.  
 
 Collaborative Filtering은 "특정 아이템에 대하여 선호가 유사한 사용자들은 다른 아이템들에 대해서도 비슷한 선호를 가질 것"이라는 아이디어를 기반으로 하며, 그 중 model-based approach는 데이터에 내제되어 있는 복잡한 패턴을 발견하기 위해 다양한 모델을 활용하는 방법이다.
@@ -100,7 +97,7 @@ $$
 $$
 
 ---
-## **1.2 Matrix Factorization의 한계점**
+## **2.2 Matrix Factorization의 한계점**
 논문의 저자는 내적 같은 linear 모델은 사용자와 아이템 사이의 복잡한 관계를 표현하는 데 한계가 있다고 지적한다.  
 
 <p align="center">
@@ -139,10 +136,10 @@ $$
 
 
 ---
-# **2. **
+# **3. **
 
 
 
 
 ---
-# **3. **
+# **4. **
